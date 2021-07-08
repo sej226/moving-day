@@ -367,7 +367,6 @@ public interface PaymentService {
 - CodeBuild 프로젝트를 생성하고 AWS_ACCOUNT_ID, KUBE_URL, KUBE_TOKEN 환경 변수 세팅을 한다
 ```
 SA 생성
-
 ```
 ![sa생성](https://user-images.githubusercontent.com/26791027/124943205-45022380-e047-11eb-8dc7-e910dbcf6db7.PNG)
 
@@ -381,6 +380,11 @@ Role 생성
 kubectl -n kube-system describe secret eks-admin
 ```
 ![token](https://user-images.githubusercontent.com/26791027/124944092-03be4380-e048-11eb-96c3-07ab7618bed9.PNG)
+
+```
+KUBE_URL 확인
+```
+![kube_url](https://user-images.githubusercontent.com/26791027/124947164-91029780-e04a-11eb-88d8-8edbffc45f85.PNG)
 
 
 
