@@ -261,11 +261,21 @@ Transfer-Encoding: chunked
     "phoneNumber": "0101234567",
     "qty": 5
 }
+XX
+```
+```
 
+# moving 서비스의 이사 정보 등록처리
+http localhost:8081/movings movingStatus="MovingRequest" qty=15 movindDate="20210725"
+
+# mover 서비스의 이사 접수 처리
+http localhost:8083/movers moverDate="20210725"
+
+# 이사 접수 상태 확인
+http localhost:8081/movings/1
 ```
 ## API Gateway
-- API Gateway를 통하여 동일 진입점으로 진입하여 각 마이크로 서비스를 접근할 수 있다. 외부에서 접근을 위하여 Gateway의 Service는 LoadBalancer Type으로 생성했다.
-
+- API Gateway를 통하여 동일 진입점으로 진입하여 각 마이크로 서비스를 접근할 수 있다. 
 ```
 # application.yml
 
@@ -290,9 +300,17 @@ spring:
           uri: http://message:8080
           predicates:
             - Path= /message/** 
-     
-# service.yaml
-??
+
+```
+```
+# moving 서비스의 이사 정보 등록처리
+http localhost:8080/movings movingStatus="MovingRequest" qty=15 movindDate="20210725"
+
+# mover 서비스의 이사 접수 처리
+http localhost:8080/movers moverDate="20210725"
+
+# 이사 접수 상태 확인
+http localhost:8080/movings/1
 ```
 
 ## 폴리글랏 퍼시스턴스
