@@ -82,3 +82,78 @@
     - Readiness Probe 의 설정과 Rolling update을 통하여 신규 버전이 완전히 서비스를 받을 수 있는 상태일때 신규버전의 서비스로 전환됨을 siege 등으로 증명 
     - Contract Test :  자동화된 경계 테스트를 통하여 구현 오류나 API 계약위반를 미리 차단 가능한가?
 *****
+
+
+## 분석설계
+*****
+
+## 구현
+*****
+분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 BC별로 대변되는 마이크로 서비스들을 스프링부트로 구현하였다. 
+구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 808n 이다)
+
+```
+cd moving
+mvn spring-boot:run
+
+cd mover
+mvn spring-boot:run 
+
+cd payment
+mvn spring-boot:run  
+
+cd message
+mvn spring-boot:run
+```
+## DDD의 적용
+*****
+각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다
+
+## API Gateway
+*****
+
+## 폴리글랏 퍼시스턴스
+*****
+
+## 폴리글랏 프로그래밍
+*****
+
+## 동기식 호출 과 Fallback 처리
+*****
+
+
+## 비동기식 호출 / 시간적 디커플링 / 장애격리 / 최종 (Eventual) 일관성 테스트
+*****
+
+
+## Saga Pattern / 보상 트랜잭션
+*****
+
+## CQRS / Meterialized View
+*****
+
+## 운영
+*****
+### Liveness / Readiness 설정
+*****
+
+### Self Healing
+*****
+
+### CI/CD 설정
+*****
+
+### 동기식 호출 / 서킷 브레이킹 / 장애격리
+*****
+
+### 모니터링
+*****
+
+### 무정지 재배포
+*****
+
+### Persistence Volum Claim
+*****
+
+### ConfigMap / Secret
+*****
