@@ -386,6 +386,9 @@ KUBE_URL 확인
 ```
 ![kube_url](https://user-images.githubusercontent.com/26791027/124947164-91029780-e04a-11eb-88d8-8edbffc45f85.PNG)
 
+```
+buildspec.yml 파일 
+```
 
 
 ### 동기식 호출 / 서킷 브레이킹 / 장애격리
