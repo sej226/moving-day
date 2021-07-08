@@ -83,12 +83,69 @@
     - Contract Test :  자동화된 경계 테스트를 통하여 구현 오류나 API 계약위반를 미리 차단 가능한가?
 *****
 
+## AWS 설정
+### cluster 생성
+```
+root@labs--880209778:/home/project# eksctl create cluster --name user07-eks --version 1.17 --nodegroup-name standard-workers --node-type t3.medium --nodes 4 --nodes-min 1 --nodes-max 4
+
+root@labs--880209778:/home/project# aws eks --region ap-southeast-2 update-kubeconfig --name user07-eks
+Cluster status is CREATING
+
+root@labs--880209778:/home/project# root@labs--880209778:/home/project# aws eks --region ap-southeast-2 update-kubeconfig --name user07-eks
+Cluster status is CREATING
+```
+### 노드 확인
+```
+root@labs--880209778:/home/project/moving-day#  kubectl config current-context
+user07@user07-eks.ap-southeast-2.eksctl.io
+
+root@labs--880209778:/home/project/moving-day#  kubectl get nodes
+NAME                                                STATUS   ROLES    AGE   VERSION
+ip-192-168-11-133.ap-southeast-2.compute.internal   Ready    <none>   6h    v1.17.12-eks-7684af
+ip-192-168-41-146.ap-southeast-2.compute.internal   Ready    <none>   6h    v1.17.12-eks-7684af
+ip-192-168-75-51.ap-southeast-2.compute.internal    Ready    <none>   6h    v1.17.12-eks-7684af
+ip-192-168-93-28.ap-southeast-2.compute.internal    Ready    <none>   6h    v1.17.12-eks-7684af
+```
+### cluster 확인
+```
+root@labs--880209778:/home/project/moving-day# kubectl config current-context
+user07@user07-eks.ap-southeast-2.eksctl.io
+root@labs--880209778:/home/project/moving-day# kubectl create ns kafka
+namespace/kafka created
+root@labs--880209778:/home/project/moving-day#  kubectl create ns user07-ns
+namespace/user07-ns created
+root@labs--880209778:/home/project/moving-day# kubectl get ns
+NAME              STATUS   AGE
+default           Active   9h
+kafka             Active   3h2m
+kube-node-lease   Active   9h
+kube-public       Active   9h
+kube-system       Active   9h
+user07-ns         Active   7s
+root@labs--880209778:/home/project/moving-day# kubectl config set-context $(kubectl config current-context) --namespace=user07-ns
+Context "user07@user07-eks.ap-southeast-2.eksctl.io" modified.
+root@labs--880209778:/home/project/moving-day# kubectl config get-contexts
+CURRENT   NAME                                         CLUSTER                               AUTHINFO                                     NAMESPACE
+          kcb-test2.k8s.local                          kcb-test2.k8s.local                   labs--880209778                              labs--880209778
+*         user07@user07-eks.ap-southeast-2.eksctl.io   user07-eks.ap-southeast-2.eksctl.io   user07@user07-eks.ap-southeast-2.eksctl.io   user07-ns
+```
+
 
 ## 분석설계
 *****
 
+
 ## 구현
 *****
+### Kubernetes환경 구성
+
+#### namespace 설정
+```
+root@labs--880209778:/home/project/moving-day# kubectl create ns kafka
+namespace/kafka created
+
+
+```
 
 분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 BC별로 대변되는 마이크로 서비스들을 스프링부트로 구현하였다. 
 구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 808n 이다)
