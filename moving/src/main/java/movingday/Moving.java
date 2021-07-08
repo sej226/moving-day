@@ -23,8 +23,7 @@ public class Moving {
         BeanUtils.copyProperties(this, movingRegistered);
         movingRegistered.publishAfterCommit();
 
-        //Following code causes dependency to external APIs
-        // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
+
 
         movingday.external.Payment payment = new movingday.external.Payment();
         // mappings goes here
