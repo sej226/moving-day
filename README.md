@@ -89,6 +89,7 @@
 
 ## 구현
 *****
+
 분석/설계 단계에서 도출된 헥사고날 아키텍처에 따라, 각 BC별로 대변되는 마이크로 서비스들을 스프링부트로 구현하였다. 
 구현한 각 서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 808n 이다)
 
@@ -107,9 +108,63 @@ mvn spring-boot:run
 ```
 ## DDD의 적용
 
-- 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다
+- 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다 (예시는 moving 마이크로 서비스)
 ```
 package movingday;
+
+import javax.persistence.*;
+import org.springframework.beans.BeanUtils;
+import java.util.List;
+
+@Entity
+@Table(name="Moving_table")
+public class Moving {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long movingId;
+    private String phoneNumber;
+    private Long qty;
+    private String movingStatus;
+    private String movingDate;
+
+    public Long getMovingId() {
+        return movingId;
+    }
+
+    public void setMovingId(Long movingId) {
+        this.movingId = movingId;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public Long getQty() {
+        return qty;
+    }
+
+    public void setQty(Long qty) {
+        this.qty = qty;
+    }
+    public String getMovingStatus() {
+        return movingStatus;
+    }
+
+    public void setMovingStatus(String movingStatus) {
+        this.movingStatus = movingStatus;
+    }
+    public String getMovingDate() {
+        return movingDate;
+    }
+
+    public void setMovingDate(String movingDate) {
+        this.movingDate = movingDate;
+    }
+}
+
 ```
 - Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 별도 처리 없이 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
 ```
