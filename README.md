@@ -106,11 +106,60 @@ cd message
 mvn spring-boot:run
 ```
 ## DDD의 적용
-*****
-각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다
 
+- 각 서비스내에 도출된 핵심 Aggregate Root 객체를 Entity 로 선언하였다
+```
+package movingday;
+```
+- Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 별도 처리 없이 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
+```
+package movingday;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource(collectionResourceRel="movings", path="movings")
+public interface MovingRepository extends PagingAndSortingRepository<Moving, Long>{
+
+
+}
+```
+- 적용 후 REST API 의 테스트
+```
+#moving 서비스 처리
+
+```
 ## API Gateway
-*****
+- API Gateway를 통하여 동일 진입점으로 진입하여 각 마이크로 서비스를 접근할 수 있다. 외부에서 접근을 위하여 Gateway의 Service는 LoadBalancer Type으로 생성했다.
+
+```
+# application.yml
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: moving
+          uri: http://moving:8080
+          predicates:
+            - Path=/movings/** 
+        - id: payment
+          uri: http://payment:8080
+          predicates:
+            - Path=/payments/** 
+        - id: mover
+          uri: http://mover:8080
+          predicates:
+            - Path=/movers/** 
+        - id: message
+          uri: http://message:8080
+          predicates:
+            - Path= /message/** 
+     
+# service.yaml
+??
+```
 
 ## 폴리글랏 퍼시스턴스
 *****
