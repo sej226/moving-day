@@ -72,7 +72,8 @@
   - API 게이트웨이
     - API GW를 통하여 마이크로 서비스들의 집입점을 통일할 수 있는가?
     - 게이트웨이와 인증서버(OAuth), JWT 토큰 인증을 통하여 마이크로서비스들을 보호할 수 있는가?
-- 운영 (25)
+- 
+(25)
   - SLA 준수
     - 셀프힐링: Liveness Probe 를 통하여 어떠한 서비스의 health 상태가 지속적으로 저하됨에 따라 어떠한 임계치에서 pod 가 재생되는 것을 증명할 수 있는가?
     - 서킷브레이커, 레이트리밋 등을 통한 장애격리와 성능효율을 높힐 수 있는가?
@@ -362,6 +363,26 @@ public interface PaymentService {
 
 ### CI/CD 설정
 *****
+각 구현체들은 각자의 source repository 에 구성되었고, 사용한 CI/CD는 buildspec.yml을 이용한 AWS codebuild를 사용
+- CodeBuild 프로젝트를 생성하고 AWS_ACCOUNT_ID, KUBE_URL, KUBE_TOKEN 환경 변수 세팅을 한다
+```
+SA 생성
+
+```
+![sa생성](https://user-images.githubusercontent.com/26791027/124943205-45022380-e047-11eb-8dc7-e910dbcf6db7.PNG)
+
+```
+Role 생성
+```
+![role생성](https://user-images.githubusercontent.com/26791027/124943528-88f52880-e047-11eb-9e83-cf16ac636abe.PNG)
+
+```
+만들어진 eks-admin SA 의 토큰 가져오기
+kubectl -n kube-system describe secret eks-admin
+```
+![token](https://user-images.githubusercontent.com/26791027/124944092-03be4380-e048-11eb-96c3-07ab7618bed9.PNG)
+
+
 
 ### 동기식 호출 / 서킷 브레이킹 / 장애격리
 *****
