@@ -182,6 +182,27 @@ public interface MovingRepository extends PagingAndSortingRepository<Moving, Lon
 - 적용 후 REST API 의 테스트
 ```
 #moving 서비스 처리
+root@labs--880209778:/home/project/moving-day# http localhost:8081/movings movingId=1 phoneNumber=0101234567 qty=5  movingDate="20210717";
+HTTP/1.1 201 
+Content-Type: application/json;charset=UTF-8
+Date: Thu, 08 Jul 2021 08:27:57 GMT
+Location: http://localhost:8081/movings/1
+Transfer-Encoding: chunked
+
+{
+    "_links": {
+        "moving": {
+            "href": "http://localhost:8081/movings/1"
+        },
+        "self": {
+            "href": "http://localhost:8081/movings/1"
+        }
+    },
+    "movingDate": "20210717",
+    "movingStatus": "Request",
+    "phoneNumber": "0101234567",
+    "qty": 5
+}
 
 ```
 ## API Gateway
